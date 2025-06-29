@@ -15,5 +15,15 @@ namespace MatchDay.RESTApi.ServiceLayer.Mappers
                 TeamId = model.TeamId,
             };
         }
+
+        public static TeamEntity ToEntity(TeamModel model)
+        {
+            return new TeamEntity
+            {
+                Id = model.Id,
+                Name = model.Name,
+                Players = model.Players?.Select(ToEntity).ToList(),
+            };
+        }
     }
 }

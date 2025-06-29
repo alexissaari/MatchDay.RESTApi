@@ -1,4 +1,5 @@
 ﻿using MatchDay.RESTApi.ServiceLayer.Interfaces;
+using MatchDay.RESTApi.ServiceLayer.Models;
 using MatchDay.RESTApi.WebLayer.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,6 +26,36 @@ namespace MatchDay.RESTApi.WebLayer
                 FullName = GetFullName(model.FirstName, model.LastName),
                 TeamName = model.TeamName,
             };
+        }
+
+        [HttpPost]
+        [Route("Player")]
+        public ActionResult Post(CreatePlayer player)
+        {
+            var model = new PlayerModel
+            {
+                FirstName = player.FirstName,
+                LastName = player.LastName,
+                TeamId = player.TeamId,
+            };
+
+            this.service.CreatePlayer(model);
+
+            return Ok();
+        }
+
+        [HttpPost]
+        [Route("Team")]
+        public ActionResult Post(CreateTeam team)
+        {
+            var model = new TeamModel
+            {
+                Name = team.Name,
+            };
+
+            this.service.CreateTeam(model);
+
+            return Ok();
         }
 
         private string GetFullName(string firstName, string lastName)
