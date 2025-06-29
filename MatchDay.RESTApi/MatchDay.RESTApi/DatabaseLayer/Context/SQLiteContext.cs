@@ -6,6 +6,7 @@ namespace MatchDay.RESTApi.DatabaseLayer.Context
     public class SQLiteContext : DbContext
     {
         public DbSet<PlayerEntity> Players { get; set; }
+        public DbSet<CoachEntity> Coaches { get; set; }
         public DbSet<TeamEntity> Teams { get; set; }
 
         public string DbPath { get; }
@@ -29,6 +30,13 @@ namespace MatchDay.RESTApi.DatabaseLayer.Context
                 .HasOne(p => p.Team)
                 .WithMany(t => t.Players)
                 .HasForeignKey(p => p.TeamId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // One-One Team-Coach relationship
+            modelBuilder.Entity<TeamEntity>()
+                .HasOne(t => t.Coach)
+                .WithOne(c => c.Team)
+                .HasForeignKey<TeamEntity>(t => t.CoachId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }
