@@ -1,6 +1,3 @@
 @MatchDay.RESTApi_HostAddress = http://localhost:5217
 
-GET {{MatchDay.RESTApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
 ###
