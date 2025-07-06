@@ -5,7 +5,11 @@ namespace MatchDay.RESTApi.ServiceLayer.Interfaces
     public interface IMatchDayService
     {
         PlayerModel GetPlayer(int id);
-        void CreatePlayer(PlayerModel player);
-        void CreateTeam(TeamModel team);
+        CoachModel GetCoach(int id);
+        TeamModel GetTeam(int id);
+
+        void AddPlayer(PlayerModel player);
+        void AddCoach(CoachModel coach);
+        void AddTeam(TeamModel team);
     }
 }

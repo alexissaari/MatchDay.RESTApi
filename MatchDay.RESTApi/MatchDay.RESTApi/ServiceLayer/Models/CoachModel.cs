@@ -2,7 +2,7 @@
 
 namespace MatchDay.RESTApi.ServiceLayer.Models
 {
-    public class PlayerModel : IPersonModel
+    public class CoachModel : IPersonModel
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

@@ -9,8 +9,8 @@ namespace MatchDay.RESTApi.DatabaseLayer.Entities
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
-        // Team
-        public int TeamId { get; set; }
-        public TeamEntity Team { get; set; }
+        // Team - nullable so that a player can exist without a team
+        public int? TeamId { get; set; }
+        public TeamEntity? Team { get; set; }
     }
 }

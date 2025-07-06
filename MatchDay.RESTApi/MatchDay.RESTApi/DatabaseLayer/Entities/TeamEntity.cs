@@ -8,11 +8,11 @@ namespace MatchDay.RESTApi.DatabaseLayer.Entities
         public int Id { get; set; }
         public string Name { get; set; }
 
-        // Players
-        public ICollection<PlayerEntity> Players { get; set; }
+        // Players - nullable so that a team can exist without players assigned yet
+        public ICollection<PlayerEntity>? Players { get; set; }
 
-        // Coach
+        // Coach - nullable so that a team can exist without a coach assigned yet
         public int? CoachId { get; set; }
-        public CoachEntity Coach { get; set; }
+        public CoachEntity? Coach { get; set; }
     }
 }
