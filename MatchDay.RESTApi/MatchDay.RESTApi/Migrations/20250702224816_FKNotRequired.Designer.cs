@@ -2,6 +2,7 @@
 using MatchDay.RESTApi.DatabaseLayer.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MatchDay.RESTApi.Migrations
 {
     [DbContext(typeof(SQLiteContext))]
-    partial class SQLiteContextModelSnapshot : ModelSnapshot
+    [Migration("20250702224816_FKNotRequired")]
+    partial class FKNotRequired
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "9.0.6");
@@ -35,7 +38,7 @@ namespace MatchDay.RESTApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Coaches", (string)null);
+                    b.ToTable("Coaches");
                 });
 
             modelBuilder.Entity("MatchDay.RESTApi.DatabaseLayer.Entities.PlayerEntity", b =>
@@ -59,7 +62,7 @@ namespace MatchDay.RESTApi.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Players", (string)null);
+                    b.ToTable("Players");
                 });
 
             modelBuilder.Entity("MatchDay.RESTApi.DatabaseLayer.Entities.TeamEntity", b =>
@@ -80,7 +83,7 @@ namespace MatchDay.RESTApi.Migrations
                     b.HasIndex("CoachId")
                         .IsUnique();
 
-                    b.ToTable("Teams", (string)null);
+                    b.ToTable("Teams");
                 });
 
             modelBuilder.Entity("MatchDay.RESTApi.DatabaseLayer.Entities.PlayerEntity", b =>

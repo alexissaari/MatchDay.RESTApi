@@ -5,7 +5,11 @@ namespace MatchDay.RESTApi.DatabaseLayer.Interfaces
     public interface IMatchDayRepository
     {
         PlayerEntity? GetPlayer(int id);
-        void CreatePlayer(PlayerEntity player);
-        void CreateTeam(TeamEntity team);
+        CoachEntity? GetCoach(int id);
+        TeamEntity? GetTeam(int id);
+
+        void AddPlayer(PlayerEntity player);
+        void AddCoach(CoachEntity coach);
+        void AddTeam(TeamEntity team);
     }
 }

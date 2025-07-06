@@ -20,16 +20,34 @@ namespace MatchDay.RESTApi.ServiceLayer
             return EntityToModel.ToModel(entity);
         }
 
-        public void CreatePlayer(PlayerModel player)
+        public CoachModel GetCoach(int id)
         {
-            var entity = ModelToEntity.ToEntity(player);
-            this.repository.CreatePlayer(entity);
+            var entity = this.repository.GetCoach(id);
+            return EntityToModel.ToModel(entity);
         }
 
-        public void CreateTeam(TeamModel team)
+        public TeamModel GetTeam(int id)
+        {
+            var entity = this.repository.GetTeam(id);
+            return EntityToModel.ToModel(entity);
+        }
+
+        public void AddPlayer(PlayerModel player)
+        {
+            var entity = ModelToEntity.ToEntity(player);
+            this.repository.AddPlayer(entity);
+        }
+
+        public void AddCoach(CoachModel coach)
+        {
+            var entity = ModelToEntity.ToEntity(coach);
+            this.repository.AddCoach(entity);
+        }
+
+        public void AddTeam(TeamModel team)
         {
             var entity = ModelToEntity.ToEntity(team);
-            this.repository.CreateTeam(entity);
+            this.repository.AddTeam(entity);
         }
     }
 }

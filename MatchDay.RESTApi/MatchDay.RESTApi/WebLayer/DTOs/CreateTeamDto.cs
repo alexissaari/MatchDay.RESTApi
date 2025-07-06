@@ -1,6 +1,6 @@
 ﻿namespace MatchDay.RESTApi.WebLayer.DTOs
 {
-    public class CreateTeam
+    public class CreateTeamDto
     {
         public string Name {  get; set; }
     }
