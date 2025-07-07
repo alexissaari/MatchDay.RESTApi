@@ -33,11 +33,11 @@ namespace MatchDay.RESTApi.DatabaseLayer.Context
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
 
-            // One-to-One Team-Coach relationship
-            modelBuilder.Entity<TeamEntity>()
-                .HasOne(t => t.Coach)
-                .WithOne(c => c.Team)
-                .HasForeignKey<TeamEntity>(t => t.CoachId)
+            // One-to-One Coach-Team relationship
+            modelBuilder.Entity<CoachEntity>()
+                .HasOne(c => c.Team)
+                .WithOne(t => t.Coach)
+                .HasForeignKey<CoachEntity>(c => c.TeamId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.SetNull);
         }
