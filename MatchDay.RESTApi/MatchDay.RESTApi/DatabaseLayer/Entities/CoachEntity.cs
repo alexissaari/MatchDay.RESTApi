@@ -4,12 +4,10 @@ namespace MatchDay.RESTApi.DatabaseLayer.Entities
 {
     public class CoachEntity : IPersonEntity
     {
-        // Coach
-        public int Id { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public int? Id { get; set; } // Not required because on creation this won't have an Id yet
+        public required string FirstName { get; set; }
+        public required string LastName { get; set; }
 
-        // Team - nullable so that a coach can exist without a team
         public int? TeamId { get; set; }
         public TeamEntity? Team { get; set; }
     }

@@ -14,21 +14,27 @@ namespace MatchDay.RESTApi.ServiceLayer
             this.repository = repository;
         }
 
-        public PlayerModel GetPlayer(int id)
+        public PlayerModel? GetPlayer(int id)
         {
             var entity = this.repository.GetPlayer(id);
+            if (entity == null) { return null; }
+
             return EntityToModel.ToModel(entity);
         }
 
-        public CoachModel GetCoach(int id)
+        public CoachModel? GetCoach(int id)
         {
             var entity = this.repository.GetCoach(id);
+            if (entity == null) { return null; }
+
             return EntityToModel.ToModel(entity);
         }
 
-        public TeamModel GetTeam(int id)
+        public TeamModel? GetTeam(int id)
         {
             var entity = this.repository.GetTeam(id);
+            if (entity == null) { return null; }
+
             return EntityToModel.ToModel(entity);
         }
 
@@ -44,10 +50,14 @@ namespace MatchDay.RESTApi.ServiceLayer
             this.repository.AddCoach(entity);
         }
 
-        public void AddTeam(TeamModel team)
+        public void CreateTeam(TeamModel team)
         {
-            var entity = ModelToEntity.ToEntity(team);
-            this.repository.AddTeam(entity);
+            var teamEntity = ModelToEntity.ToEntity(team);
+
+            if (teamEntity != null)
+            {
+                this.repository.AddTeam(teamEntity);
+            }
         }
     }
 }

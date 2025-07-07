@@ -34,6 +34,7 @@ namespace MatchDay.RESTApi.ServiceLayer.Mappers
                 Id = model.Id,
                 Name = model.Name,
                 Players = model.Players?.Select(ToEntity).ToList(),
+                Coach = model.Coach == null ? null : ToEntity(model.Coach),
             };
         }
     }

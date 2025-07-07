@@ -17,81 +17,19 @@ namespace MatchDay.RESTApi.WebLayer
         }
 
         [HttpGet]
-        [Route("Player/{playerId}")]
-        public ActionResult<PlayerDto> GetPlayer(int playerId)
-        {
-            var model = this.service.GetPlayer(playerId);
-
-            if (model == null) return NotFound();
-
-            return new PlayerDto
-            {
-                FullName = GetFullName(model.FirstName, model.LastName),
-                TeamName = model.TeamName,
-            };
-        }
-
-        [HttpGet]
-        [Route("Coach/{coachId}")]
-        public ActionResult<CoachDto> GetCoach(int coachId)
-        {
-            var model = this.service.GetCoach(coachId);
-
-            if (model == null) return NotFound();
-
-            return new CoachDto
-            {
-                FullName = GetFullName(model.FirstName, model.LastName),
-                TeamName = model.TeamName,
-            };
-        }
-
-        [HttpGet]
         [Route("Team/{teamId}")]
-        public ActionResult<TeamDto> GetTeam(int teamId)
+        public ActionResult<GetTeamResponseDto> GetTeam(int teamId)
         {
             var model = this.service.GetTeam(teamId);
 
             if (model == null) return NotFound();
 
-            return new TeamDto
+            return new GetTeamResponseDto
             {
-                TeamName = model.Name,
-                Players = model.Players.Select(p => GetFullName(p.FirstName, p.LastName)).ToList(),
-                CoachName = model.CoachName,
+                TeamName = model.Name ?? string.Empty,
+                Roster = model.Players?.Select(p => GetFullName(p.FirstName, p.LastName)).ToList() ?? new List<string>(),
+                CoachName = model.Coach == null ? string.Empty : GetFullName(model.Coach.FirstName, model.Coach.LastName),
             };
-        }
-
-        [HttpPost]
-        [Route("Player")]
-        public ActionResult PostPlayer(CreatePlayerDto player)
-        {
-            var model = new PlayerModel
-            {
-                FirstName = player.FirstName,
-                LastName = player.LastName,
-                TeamId = player.TeamId,
-            };
-
-            this.service.AddPlayer(model);
-
-            return Ok();
-        }
-
-        [HttpPost]
-        [Route("Coach")]
-        public ActionResult PostCoach(CreateCoachDto coach)
-        {
-            var model = new CoachModel
-            {
-                FirstName = coach.FirstName,
-                LastName = coach.LastName,
-                TeamId = coach.TeamId,
-            };
-
-            this.service.AddCoach(model);
-
-            return Ok();
         }
 
         [HttpPost]
@@ -101,9 +39,19 @@ namespace MatchDay.RESTApi.WebLayer
             var model = new TeamModel
             {
                 Name = team.Name,
+                Coach = new CoachModel()
+                {
+                    FirstName = team.Coach?.FirstName ?? string.Empty,
+                    LastName = team.Coach?.LastName ?? string.Empty,
+                },
+                Players = team.Roster == null ? null : team.Roster?.Select(p => new PlayerModel
+                {
+                    FirstName = p.FirstName,
+                    LastName = p.LastName
+                }).ToList(),
             };
 
-            this.service.AddTeam(model);
+            this.service.CreateTeam(model);
 
             return Ok();
         }
