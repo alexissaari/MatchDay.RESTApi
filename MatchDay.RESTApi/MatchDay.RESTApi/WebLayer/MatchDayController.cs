@@ -74,7 +74,7 @@ namespace MatchDay.RESTApi.WebLayer
             
             await this.service.CreateTeam(model);
 
-            // ALEXIS: Would this return before await CreateTeam() completes?
+            // ALEXIS Would this return before await CreateTeam() completes?
             return Results.Ok();
         }
 
