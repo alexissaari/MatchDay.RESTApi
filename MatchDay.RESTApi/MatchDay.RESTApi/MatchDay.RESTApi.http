@@ -1,3 +1,71 @@
 @MatchDay.RESTApi_HostAddress = http://localhost:5217
 
-###
+### Valid GET Team
+GET {{MatchDay.RESTApi_HostAddress}}/MatchDay/Team/1
+
+### Invalid GET Team
+GET {{MatchDay.RESTApi_HostAddress}}/MatchDay/Team/0
+
+### Invalid GET Team
+GET {{MatchDay.RESTApi_HostAddress}}/MatchDay/Team/-200
+
+### Valid POST Team
+POST {{MatchDay.RESTApi_HostAddress}}/MatchDay/Team
+Content-Type: application/json
+{
+    "name": "string",
+    "roster": [
+        {
+            "firstName": "string",
+            "lastName": "string"
+        },
+        {
+            "firstName": "asdf",
+            "lastName": "aasdf"
+        }
+    ],
+        "coach": {
+        "firstName": "asdf",
+        "lastName": "string"
+    }
+}
+
+### Invalid Name
+POST {{MatchDay.RESTApi_HostAddress}}/MatchDay/Team
+Content-Type: application/json
+{
+    "roster": [
+        {
+            "firstName": "string",
+            "lastName": "string"
+        },
+        {
+            "firstName": "asdf",
+            "lastName": "aasdf"
+        }
+    ],
+        "coach": {
+        "firstName": "asdf",
+        "lastName": "string"
+    }
+}
+
+### Invalid Name
+POST {{MatchDay.RESTApi_HostAddress}}/MatchDay/Team
+Content-Type: application/json
+{
+    "roster": [
+        {
+            "firstName": "string",
+            "lastName": "string"
+        },
+        {
+            "firstName": "asdf",
+            "lastName": "aasdf"
+        }
+    ],
+        "coach": {
+        "firstName": "asdf",
+        "lastName": "string"
+    }
+}

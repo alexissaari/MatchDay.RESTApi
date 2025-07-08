@@ -14,40 +14,12 @@ namespace MatchDay.RESTApi.ServiceLayer
             this.repository = repository;
         }
 
-        public async Task<PlayerModel?> GetPlayer(int id)
-        {
-            var entity = await this.repository.GetPlayer(id);
-            if (entity == null) { return null; }
-
-            return EntityToModel.ToModel(entity);
-        }
-
-        public async Task<CoachModel?> GetCoach(int id)
-        {
-            var entity = await this.repository.GetCoach(id);
-            if (entity == null) { return null; }
-
-            return EntityToModel.ToModel(entity);
-        }
-
         public async Task<TeamModel?> GetTeam(int id)
         {
             var entity = await this.repository.GetTeam(id);
             if (entity == null) { return null; }
 
             return EntityToModel.ToModel(entity);
-        }
-
-        public async Task AddPlayer(PlayerModel player)
-        {
-            var entity = ModelToEntity.ToEntity(player);
-            await this.repository.AddPlayer(entity);
-        }
-
-        public async Task AddCoach(CoachModel coach)
-        {
-            var entity = ModelToEntity.ToEntity(coach);
-            await this.repository.AddCoach(entity);
         }
 
         public async Task CreateTeam(TeamModel team)

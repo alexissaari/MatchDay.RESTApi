@@ -1,6 +1,8 @@
-﻿using MatchDay.RESTApi.ServiceLayer.Interfaces;
+﻿using FluentValidation;
+using MatchDay.RESTApi.ServiceLayer.Interfaces;
 using MatchDay.RESTApi.ServiceLayer.Models;
 using MatchDay.RESTApi.WebLayer.DTOs;
+using MatchDay.RESTApi.WebLayer.Validators;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MatchDay.RESTApi.WebLayer
@@ -18,49 +20,77 @@ namespace MatchDay.RESTApi.WebLayer
 
         [HttpGet]
         [Route("Team/{teamId}")]
-        public async Task<GetTeamResponseDto?> GetTeam(int teamId)
+        public async Task<IResult> GetTeam(int teamId, GetTeamDtoValidator validator)
         {
-            var model = await this.service.GetTeam(teamId);
+            var validationResults = validator.Validate(teamId);
 
-            if (model != null)
+            if (!validationResults.IsValid)
             {
-                return new GetTeamResponseDto
-                {
-                    TeamName = model.Name ?? string.Empty,
-                    Roster = model.Players?.Select(p => GetFullName(p.FirstName, p.LastName)).ToList() ?? new List<string>(),
-                    CoachName = model.Coach == null ? string.Empty : GetFullName(model.Coach.FirstName, model.Coach.LastName),
-                };
+                var problemDetails = FormatProblemDetails(validationResults);
+                return Results.Problem(problemDetails);
             }
 
-            // ToDo - return Not Found Exception
-            return null;
+            var model = await this.service.GetTeam(teamId);
+
+            if (model == null)
+            {
+                return Results.NotFound($"No Team found with teamId = {teamId}");
+            }
+
+            return Results.Ok(new GetTeamResponseDto
+            {
+                TeamName = model.Name ?? string.Empty,
+                Roster = model.Players?.Select(p => GetFullName(p.FirstName, p.LastName)).ToList() ?? new List<string>(),
+                CoachName = model.Coach == null ? string.Empty : GetFullName(model.Coach.FirstName, model.Coach.LastName),
+            });
         }
 
         [HttpPost]
         [Route("Team")]
-        public async Task PostTeam(CreateTeamDto team)
+        public async Task<IResult> PostTeam(CreateTeamDto request, IValidator<CreateTeamDto> validator)
         {
+            var validationResults = validator.Validate(request);
+
+            if (!validationResults.IsValid)
+            {
+                var problemDetails = FormatProblemDetails(validationResults);
+                return Results.Problem(problemDetails);
+            }
+
             var model = new TeamModel
             {
-                Name = team.Name,
+                Name = request.Name,
                 Coach = new CoachModel()
                 {
-                    FirstName = team.Coach?.FirstName ?? string.Empty,
-                    LastName = team.Coach?.LastName ?? string.Empty,
+                    FirstName = request.Coach?.FirstName ?? string.Empty,
+                    LastName = request.Coach?.LastName ?? string.Empty,
                 },
-                Players = team.Roster == null ? null : team.Roster?.Select(p => new PlayerModel
+                Players = request.Roster == null ? null : request.Roster?.Select(p => new PlayerModel
                 {
                     FirstName = p.FirstName,
                     LastName = p.LastName
                 }).ToList(),
             };
-
+            
             await this.service.CreateTeam(model);
+
+            // ALEXIS Would this return before await CreateTeam() completes?
+            return Results.Ok();
         }
 
         private string GetFullName(string firstName, string lastName)
         {
             return $"{firstName} {lastName}";
+        }
+
+        private HttpValidationProblemDetails FormatProblemDetails(FluentValidation.Results.ValidationResult validationResults)
+        {
+            return new HttpValidationProblemDetails(validationResults.ToDictionary())
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Title = "Validation Failed",
+                Detail = "One or more validation errors occured."
+            };
         }
     }
 }

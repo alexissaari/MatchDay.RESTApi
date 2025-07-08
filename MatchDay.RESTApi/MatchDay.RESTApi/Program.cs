@@ -1,9 +1,14 @@
+using FluentValidation;
 using MatchDay.RESTApi.DatabaseLayer;
 using MatchDay.RESTApi.DatabaseLayer.Interfaces;
 using MatchDay.RESTApi.ServiceLayer;
 using MatchDay.RESTApi.ServiceLayer.Interfaces;
+using MatchDay.RESTApi.WebLayer.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Add validation
+builder.Services.AddValidatorsFromAssembly(typeof(CreateTeamDtoValidator).Assembly, includeInternalTypes: true);
 
 // Add services to the container.
 builder.Services.AddScoped<IMatchDayService, MatchDayService>();
