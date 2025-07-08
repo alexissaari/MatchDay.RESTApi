@@ -18,23 +18,27 @@ namespace MatchDay.RESTApi.WebLayer
 
         [HttpGet]
         [Route("Team/{teamId}")]
-        public ActionResult<GetTeamResponseDto> GetTeam(int teamId)
+        public async Task<GetTeamResponseDto?> GetTeam(int teamId)
         {
-            var model = this.service.GetTeam(teamId);
+            var model = await this.service.GetTeam(teamId);
 
-            if (model == null) return NotFound();
-
-            return new GetTeamResponseDto
+            if (model != null)
             {
-                TeamName = model.Name ?? string.Empty,
-                Roster = model.Players?.Select(p => GetFullName(p.FirstName, p.LastName)).ToList() ?? new List<string>(),
-                CoachName = model.Coach == null ? string.Empty : GetFullName(model.Coach.FirstName, model.Coach.LastName),
-            };
+                return new GetTeamResponseDto
+                {
+                    TeamName = model.Name ?? string.Empty,
+                    Roster = model.Players?.Select(p => GetFullName(p.FirstName, p.LastName)).ToList() ?? new List<string>(),
+                    CoachName = model.Coach == null ? string.Empty : GetFullName(model.Coach.FirstName, model.Coach.LastName),
+                };
+            }
+
+            // ToDo - return Not Found Exception
+            return null;
         }
 
         [HttpPost]
         [Route("Team")]
-        public ActionResult PostTeam(CreateTeamDto team)
+        public async Task PostTeam(CreateTeamDto team)
         {
             var model = new TeamModel
             {
@@ -51,9 +55,7 @@ namespace MatchDay.RESTApi.WebLayer
                 }).ToList(),
             };
 
-            this.service.CreateTeam(model);
-
-            return Ok();
+            await this.service.CreateTeam(model);
         }
 
         private string GetFullName(string firstName, string lastName)

@@ -7,54 +7,61 @@ namespace MatchDay.RESTApi.DatabaseLayer
 {
     public class MatchDayRepository : IMatchDayRepository
     {
-        public PlayerEntity? GetPlayer(int id)
+        public async Task<PlayerEntity?> GetPlayer(int id)
         {
-            using (var db = new SQLiteContext())
+            await using (var db = new SQLiteContext())
             {
-                return db.Players.Include(x => x.Team).FirstOrDefault(x => x.Id == id);
+                return await db.Players
+                    .Include(x => x.Team)
+                    .FirstOrDefaultAsync(x => x.Id == id);
             }
         }
 
-        public CoachEntity? GetCoach(int id)
+        public async Task<CoachEntity?> GetCoach(int id)
         {
-            using (var db = new SQLiteContext())
+            await using (var db = new SQLiteContext())
             {
-                return db.Coaches.Include(x => x.Team).FirstOrDefault(x => x.Id == id);
+                return await db.Coaches
+                    .Include(x => x.Team)
+                    .FirstOrDefaultAsync(x => x.Id == id);
             }
         }
 
-        public TeamEntity? GetTeam(int id)
+        public async Task<TeamEntity?> GetTeam(int id)
         {
-            using (var db = new SQLiteContext())
+            await using (var db = new SQLiteContext())
             {
-                return db.Teams.Include(x => x.Players).Include(x => x.Coach).FirstOrDefault(x => x.Id == id);
+                return await db.Teams
+                    .Include(x => x.Players)
+                    .Include(x => x.Coach)
+                    .FirstOrDefaultAsync(x => x.Id == id);
             }
         }
 
-        public void AddPlayer(PlayerEntity player)
+        public async Task AddPlayer(PlayerEntity player)
         {
-            using (var db = new SQLiteContext())
+            await using (var db = new SQLiteContext())
             {
-                db.Players.Add(player);
-                db.SaveChanges();
+                await db.Players.AddAsync(player);
+                await db.SaveChangesAsync();
             }
         }
 
-        public void AddCoach(CoachEntity coach)
+        public async Task AddCoach(CoachEntity coach)
         {
-            using (var db = new SQLiteContext())
+            await using (var db = new SQLiteContext())
             {
-                db.Coaches.Add(coach);
-                db.SaveChanges();
+                await db.Coaches.AddAsync(coach);
+                await db.SaveChangesAsync();
             }
         }
 
-        public void AddTeam(TeamEntity team)
+        public async Task AddTeam(TeamEntity team)
         {
-            using (var db = new SQLiteContext())
+            await using (var db = new SQLiteContext())
             {
-                db.Teams.Add(team);
-                db.SaveChanges();
+                await db.Teams.AddAsync(team);
+                await db.SaveChangesAsync();
             }
         }
     }

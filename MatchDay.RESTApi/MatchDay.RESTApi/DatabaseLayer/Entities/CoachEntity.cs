@@ -8,7 +8,7 @@ namespace MatchDay.RESTApi.DatabaseLayer.Entities
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
 
-        public int? TeamId { get; set; }
-        public TeamEntity? Team { get; set; }
+        public int? TeamId { get; set; } // Not required because on creation this won't have an Id yet
+        public TeamEntity? Team { get; set; } // Not required because on creation this won't have an object to reference yet
     }
 }
