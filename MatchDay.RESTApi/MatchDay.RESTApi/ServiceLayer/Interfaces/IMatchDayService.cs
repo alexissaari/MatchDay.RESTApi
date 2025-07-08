@@ -4,12 +4,12 @@ namespace MatchDay.RESTApi.ServiceLayer.Interfaces
 {
     public interface IMatchDayService
     {
-        PlayerModel? GetPlayer(int id);
-        CoachModel? GetCoach(int id);
-        TeamModel? GetTeam(int id);
+        Task<PlayerModel?> GetPlayer(int id);
+        Task<CoachModel?> GetCoach(int id);
+        Task<TeamModel?> GetTeam(int id);
 
-        void AddPlayer(PlayerModel player);
-        void AddCoach(CoachModel coach);
-        void CreateTeam(TeamModel team);
+        Task AddPlayer(PlayerModel player);
+        Task AddCoach(CoachModel coach);
+        Task CreateTeam(TeamModel team);
     }
 }

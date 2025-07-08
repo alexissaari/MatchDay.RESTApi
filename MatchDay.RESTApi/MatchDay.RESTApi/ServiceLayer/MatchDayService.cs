@@ -14,49 +14,49 @@ namespace MatchDay.RESTApi.ServiceLayer
             this.repository = repository;
         }
 
-        public PlayerModel? GetPlayer(int id)
+        public async Task<PlayerModel?> GetPlayer(int id)
         {
-            var entity = this.repository.GetPlayer(id);
+            var entity = await this.repository.GetPlayer(id);
             if (entity == null) { return null; }
 
             return EntityToModel.ToModel(entity);
         }
 
-        public CoachModel? GetCoach(int id)
+        public async Task<CoachModel?> GetCoach(int id)
         {
-            var entity = this.repository.GetCoach(id);
+            var entity = await this.repository.GetCoach(id);
             if (entity == null) { return null; }
 
             return EntityToModel.ToModel(entity);
         }
 
-        public TeamModel? GetTeam(int id)
+        public async Task<TeamModel?> GetTeam(int id)
         {
-            var entity = this.repository.GetTeam(id);
+            var entity = await this.repository.GetTeam(id);
             if (entity == null) { return null; }
 
             return EntityToModel.ToModel(entity);
         }
 
-        public void AddPlayer(PlayerModel player)
+        public async Task AddPlayer(PlayerModel player)
         {
             var entity = ModelToEntity.ToEntity(player);
-            this.repository.AddPlayer(entity);
+            await this.repository.AddPlayer(entity);
         }
 
-        public void AddCoach(CoachModel coach)
+        public async Task AddCoach(CoachModel coach)
         {
             var entity = ModelToEntity.ToEntity(coach);
-            this.repository.AddCoach(entity);
+            await this.repository.AddCoach(entity);
         }
 
-        public void CreateTeam(TeamModel team)
+        public async Task CreateTeam(TeamModel team)
         {
             var teamEntity = ModelToEntity.ToEntity(team);
 
             if (teamEntity != null)
             {
-                this.repository.AddTeam(teamEntity);
+                await this.repository.AddTeam(teamEntity);
             }
         }
     }
