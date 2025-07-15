@@ -22,14 +22,22 @@ namespace MatchDay.RESTApi.ServiceLayer
             return EntityToModel.ToModel(entity);
         }
 
-        public async Task CreateTeam(TeamModel team)
+        public async Task<int> CreateTeam(TeamModel team)
         {
             var teamEntity = ModelToEntity.ToEntity(team);
 
             if (teamEntity != null)
             {
-                await this.repository.AddTeam(teamEntity);
+                var teamId = await this.repository.AddTeam(teamEntity);
+                team.Id = teamId;
             }
+
+            if (team.Id != null)
+            {
+                return team.Id.Value;
+            }
+
+            return 0;
         }
     }
 }

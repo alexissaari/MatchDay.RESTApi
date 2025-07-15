@@ -10,6 +10,6 @@ namespace MatchDay.RESTApi.DatabaseLayer.Interfaces
 
         Task AddPlayer(PlayerEntity player);
         Task AddCoach(CoachEntity coach);
-        Task AddTeam(TeamEntity team);
+        Task<int?> AddTeam(TeamEntity team);
     }
 }

@@ -3,7 +3,7 @@ using MatchDay.RESTApi.ServiceLayer.Models;
 
 namespace MatchDay.RESTApi.ServiceLayer.Mappers
 {
-    public static class ModelToEntity
+    public record ModelToEntity
     {
         public static PlayerEntity ToEntity(PlayerModel model)
         {

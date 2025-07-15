@@ -56,12 +56,14 @@ namespace MatchDay.RESTApi.DatabaseLayer
             }
         }
 
-        public async Task AddTeam(TeamEntity team)
+        public async Task<int?> AddTeam(TeamEntity team)
         {
             await using (var db = new SQLiteContext())
             {
                 await db.Teams.AddAsync(team);
                 await db.SaveChangesAsync();
+
+                return team.Id;
             }
         }
     }

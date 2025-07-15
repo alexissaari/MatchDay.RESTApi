@@ -72,10 +72,9 @@ namespace MatchDay.RESTApi.WebLayer
                 }).ToList(),
             };
             
-            await this.service.CreateTeam(model);
+            int teamId = await this.service.CreateTeam(model);
 
-            // ALEXIS Would this return before await CreateTeam() completes?
-            return Results.Ok();
+            return Results.Ok($"New Team entry successfully created! TeamId = {teamId}");
         }
 
         private string GetFullName(string firstName, string lastName)
