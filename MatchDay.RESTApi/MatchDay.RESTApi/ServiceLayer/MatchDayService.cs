@@ -2,6 +2,7 @@
 using MatchDay.RESTApi.ServiceLayer.Interfaces;
 using MatchDay.RESTApi.ServiceLayer.Mappers;
 using MatchDay.RESTApi.ServiceLayer.Models;
+using MatchDay.RESTApi.ServiceLayer.Results;
 
 namespace MatchDay.RESTApi.ServiceLayer
 {
@@ -14,12 +15,17 @@ namespace MatchDay.RESTApi.ServiceLayer
             this.repository = repository;
         }
 
-        public async Task<TeamModel?> GetTeam(int id)
+        public async Task<Result> GetTeam(int id)
         {
             var entity = await this.repository.GetTeam(id);
-            if (entity == null) { return null; }
+            if (entity == null) 
+            { 
+                return Result.Failure(TeamError.TeamNotFound); 
+            }
 
-            return EntityToModel.ToModel(entity);
+            var model = EntityToModel.ToModel(entity);
+
+            return Result.Success(model);
         }
 
         public async Task<int> CreateTeam(TeamModel team)
