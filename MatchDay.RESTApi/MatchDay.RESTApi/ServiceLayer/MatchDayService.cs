@@ -2,6 +2,7 @@
 using MatchDay.RESTApi.ServiceLayer.Interfaces;
 using MatchDay.RESTApi.ServiceLayer.Mappers;
 using MatchDay.RESTApi.ServiceLayer.Models;
+using MatchDay.RESTApi.ServiceLayer.Results;
 
 namespace MatchDay.RESTApi.ServiceLayer
 {
@@ -14,22 +15,37 @@ namespace MatchDay.RESTApi.ServiceLayer
             this.repository = repository;
         }
 
-        public async Task<TeamModel?> GetTeam(int id)
+        public async Task<Result> GetTeam(int id)
         {
             var entity = await this.repository.GetTeam(id);
-            if (entity == null) { return null; }
+            if (entity == null) 
+            { 
+                return Result.Failure(TeamError.TeamNotFound); 
+            }
 
-            return EntityToModel.ToModel(entity);
+            var model = EntityToModel.ToModel(entity);
+
+            return Result.Success(model);
         }
 
-        public async Task CreateTeam(TeamModel team)
+        public async Task<Result> CreateTeam(TeamModel teamModel)
         {
-            var teamEntity = ModelToEntity.ToEntity(team);
-
-            if (teamEntity != null)
+            // Make sure we don't already have a team with this name
+            var team = await this.repository.GetTeam(teamModel.Name);
+            if (team != null)
             {
-                await this.repository.AddTeam(teamEntity);
+                return Result.Failure(TeamError.TeamAlreadyExists);
             }
+
+            var teamEntity = ModelToEntity.ToEntity(teamModel);
+            var teamId = await this.repository.AddTeam(teamEntity);
+            
+            if (teamId == null || teamId == 0)
+            {
+                return Result.Failure(TeamError.TeamCreationError);
+            }
+
+            return Result.Success(teamId);
         }
     }
 }

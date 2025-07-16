@@ -2,6 +2,7 @@
 using MatchDay.RESTApi.ServiceLayer.Interfaces;
 using MatchDay.RESTApi.ServiceLayer.Models;
 using MatchDay.RESTApi.WebLayer.DTOs;
+using MatchDay.RESTApi.WebLayer.Mappers;
 using MatchDay.RESTApi.WebLayer.Validators;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,20 +24,18 @@ namespace MatchDay.RESTApi.WebLayer
         public async Task<IResult> GetTeam(int teamId, GetTeamDtoValidator validator)
         {
             var validationResults = validator.Validate(teamId);
-
             if (!validationResults.IsValid)
             {
-                var problemDetails = FormatProblemDetails(validationResults);
-                return Results.Problem(problemDetails);
+                return ProblemExtensions.ValidationResultToProblem(validationResults);
             }
 
-            var model = await this.service.GetTeam(teamId);
-
-            if (model == null)
+            var result = await this.service.GetTeam(teamId);
+            if (!result.IsSuccess)
             {
-                return Results.NotFound($"No Team found with teamId = {teamId}");
+                return ProblemExtensions.ResultToProblem(result);
             }
 
+            var model = (TeamModel)result.SuccessResult;
             return Results.Ok(new GetTeamResponseDto
             {
                 TeamName = model.Name ?? string.Empty,
@@ -53,8 +52,7 @@ namespace MatchDay.RESTApi.WebLayer
 
             if (!validationResults.IsValid)
             {
-                var problemDetails = FormatProblemDetails(validationResults);
-                return Results.Problem(problemDetails);
+                return ProblemExtensions.ValidationResultToProblem(validationResults);
             }
 
             var model = new TeamModel
@@ -72,25 +70,20 @@ namespace MatchDay.RESTApi.WebLayer
                 }).ToList(),
             };
             
-            await this.service.CreateTeam(model);
+            var result = await this.service.CreateTeam(model);
+            if (!result.IsSuccess)
+            {
+                return ProblemExtensions.ResultToProblem(result);
+            }
 
-            // ALEXIS Would this return before await CreateTeam() completes?
-            return Results.Ok();
+            var teamId = (int)result.SuccessResult;
+
+            return Results.Created("", teamId);
         }
 
         private string GetFullName(string firstName, string lastName)
         {
             return $"{firstName} {lastName}";
-        }
-
-        private HttpValidationProblemDetails FormatProblemDetails(FluentValidation.Results.ValidationResult validationResults)
-        {
-            return new HttpValidationProblemDetails(validationResults.ToDictionary())
-            {
-                Status = StatusCodes.Status400BadRequest,
-                Title = "Validation Failed",
-                Detail = "One or more validation errors occured."
-            };
         }
     }
 }

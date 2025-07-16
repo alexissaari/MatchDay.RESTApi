@@ -38,6 +38,17 @@ namespace MatchDay.RESTApi.DatabaseLayer
             }
         }
 
+        public async Task<TeamEntity?> GetTeam(string name)
+        {
+            await using (var db = new SQLiteContext())
+            {
+                return await db.Teams
+                    .Include(x => x.Players)
+                    .Include(x => x.Coach)
+                    .FirstOrDefaultAsync(x => x.Name == name);
+            }
+        }
+
         public async Task AddPlayer(PlayerEntity player)
         {
             await using (var db = new SQLiteContext())
@@ -56,12 +67,14 @@ namespace MatchDay.RESTApi.DatabaseLayer
             }
         }
 
-        public async Task AddTeam(TeamEntity team)
+        public async Task<int?> AddTeam(TeamEntity team)
         {
             await using (var db = new SQLiteContext())
             {
                 await db.Teams.AddAsync(team);
                 await db.SaveChangesAsync();
+
+                return team.Id;
             }
         }
     }
