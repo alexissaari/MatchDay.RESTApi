@@ -20,7 +20,29 @@ namespace MatchDay.RESTApi.WebLayer
         }
 
         [HttpGet]
-        [Route("Team/{teamId}")]
+        [Route("Teams")]
+        public async Task<IResult> GetTeams()
+        {
+            var result = await this.service.GetTeams();
+            if (!result.IsSuccess)
+            {
+                return ProblemExtensions.ResultToProblem(result);
+            }
+
+            IList<TeamModel> models = (List<TeamModel>)result.SuccessResult;
+
+            var responseDtos = models.Select(team => new GetTeamResponseDto
+            {
+                TeamName = team.Name ?? string.Empty,
+                Roster = team.Players?.Select(p => GetFullName(p.FirstName, p.LastName)).ToList() ?? new List<string>(),
+                CoachName = team.Coach == null ? string.Empty : GetFullName(team.Coach.FirstName, team.Coach.LastName),
+            }).ToList();
+
+            return Results.Ok(responseDtos);
+        }
+
+        [HttpGet]
+        [Route("Teams/{teamId}")]
         public async Task<IResult> GetTeam(int teamId, GetTeamDtoValidator validator)
         {
             var validationResults = validator.Validate(teamId);
@@ -45,7 +67,7 @@ namespace MatchDay.RESTApi.WebLayer
         }
 
         [HttpPost]
-        [Route("Team")]
+        [Route("Teams")]
         public async Task<IResult> PostTeam(CreateTeamDto request, IValidator<CreateTeamDto> validator)
         {
             var validationResults = validator.Validate(request);
@@ -66,7 +88,7 @@ namespace MatchDay.RESTApi.WebLayer
                 Players = request.Roster == null ? null : request.Roster?.Select(p => new PlayerModel
                 {
                     FirstName = p.FirstName,
-                    LastName = p.LastName
+                    LastName = p.LastName,
                 }).ToList(),
             };
             

@@ -5,6 +5,7 @@ namespace MatchDay.RESTApi.ServiceLayer.Interfaces
 {
     public interface IMatchDayService
     {
+        Task<Result> GetTeams();
         Task<Result> GetTeam(int id);
         Task<Result> CreateTeam(TeamModel team);
     }

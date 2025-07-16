@@ -38,7 +38,7 @@ namespace MatchDay.RESTApi.Migrations
                     b.HasIndex("TeamId")
                         .IsUnique();
 
-                    b.ToTable("Coaches");
+                    b.ToTable("Coaches", (string)null);
                 });
 
             modelBuilder.Entity("MatchDay.RESTApi.DatabaseLayer.Entities.PlayerEntity", b =>
@@ -62,7 +62,7 @@ namespace MatchDay.RESTApi.Migrations
 
                     b.HasIndex("TeamId");
 
-                    b.ToTable("Players");
+                    b.ToTable("Players", (string)null);
                 });
 
             modelBuilder.Entity("MatchDay.RESTApi.DatabaseLayer.Entities.TeamEntity", b =>
@@ -77,7 +77,7 @@ namespace MatchDay.RESTApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Teams");
+                    b.ToTable("Teams", (string)null);
                 });
 
             modelBuilder.Entity("MatchDay.RESTApi.DatabaseLayer.Entities.CoachEntity", b =>
