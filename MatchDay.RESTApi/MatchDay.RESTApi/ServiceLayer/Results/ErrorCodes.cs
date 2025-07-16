@@ -13,5 +13,6 @@
         // Teams
         public readonly static string TeamNotFound = "TeamNotFound";
         public readonly static string TeamAlreadyExists = "TeamAlreadyExists";
+        public readonly static string TeamCreationError = "TeamCreationError";
     }
 }

@@ -28,22 +28,24 @@ namespace MatchDay.RESTApi.ServiceLayer
             return Result.Success(model);
         }
 
-        public async Task<int> CreateTeam(TeamModel team)
+        public async Task<Result> CreateTeam(TeamModel teamModel)
         {
-            var teamEntity = ModelToEntity.ToEntity(team);
-
-            if (teamEntity != null)
+            // Make sure we don't already have a team with this name
+            var team = await this.repository.GetTeam(teamModel.Name);
+            if (team != null)
             {
-                var teamId = await this.repository.AddTeam(teamEntity);
-                team.Id = teamId;
+                return Result.Failure(TeamError.TeamAlreadyExists);
             }
 
-            if (team.Id != null)
+            var teamEntity = ModelToEntity.ToEntity(teamModel);
+            var teamId = await this.repository.AddTeam(teamEntity);
+            
+            if (teamId == null || teamId == 0)
             {
-                return team.Id.Value;
+                return Result.Failure(TeamError.TeamCreationError);
             }
 
-            return 0;
+            return Result.Success(teamId);
         }
     }
 }

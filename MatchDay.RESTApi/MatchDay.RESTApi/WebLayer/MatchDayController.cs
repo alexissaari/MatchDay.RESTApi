@@ -70,9 +70,15 @@ namespace MatchDay.RESTApi.WebLayer
                 }).ToList(),
             };
             
-            int teamId = await this.service.CreateTeam(model);
+            var result = await this.service.CreateTeam(model);
+            if (!result.IsSuccess)
+            {
+                return ProblemExtensions.ResultToProblem(result);
+            }
 
-            return Results.Ok($"New Team entry successfully created! TeamId = {teamId}");
+            var teamId = (int)result.SuccessResult;
+
+            return Results.Created("", teamId);
         }
 
         private string GetFullName(string firstName, string lastName)
