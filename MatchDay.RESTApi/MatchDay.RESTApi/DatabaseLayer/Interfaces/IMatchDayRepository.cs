@@ -6,6 +6,7 @@ namespace MatchDay.RESTApi.DatabaseLayer.Interfaces
     {
         Task<PlayerEntity?> GetPlayer(int id);
         Task<CoachEntity?> GetCoach(int id);
+        Task<IList<TeamEntity>> GetTeams();
         Task<TeamEntity?> GetTeam(int id);
         Task<TeamEntity?> GetTeam(string name);
 

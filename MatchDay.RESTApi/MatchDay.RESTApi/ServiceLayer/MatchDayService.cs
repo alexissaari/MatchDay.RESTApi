@@ -15,6 +15,15 @@ namespace MatchDay.RESTApi.ServiceLayer
             this.repository = repository;
         }
 
+        public async Task<Result> GetTeams()
+        {
+            var entities = await this.repository.GetTeams();
+
+            var models = entities.Select(EntityToModel.ToModel).ToList();
+            
+            return Result.Success(models);
+        }
+
         public async Task<Result> GetTeam(int id)
         {
             var entity = await this.repository.GetTeam(id);

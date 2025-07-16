@@ -27,6 +27,17 @@ namespace MatchDay.RESTApi.DatabaseLayer
             }
         }
 
+        public async Task<IList<TeamEntity>> GetTeams()
+        {
+            await using (var db = new SQLiteContext())
+            {
+                return await db.Teams
+                    .Include(x => x.Players)
+                    .Include(x => x.Coach)
+                    .ToListAsync();
+            }
+        }
+
         public async Task<TeamEntity?> GetTeam(int id)
         {
             await using (var db = new SQLiteContext())
