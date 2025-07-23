@@ -19,7 +19,14 @@ namespace MatchDay.RESTApi.ServiceLayer
         {
             var entities = await this.repository.GetTeams();
 
-            var models = entities.Select(EntityToModel.ToModel).ToList();
+            if (entities == null)
+            {
+                // If there are no teams, let's fail gracefully and
+                // return a Success Result with an empty list of models
+                return Result.Success(new List<TeamModel>());
+            }
+
+            IList<TeamModel> models = entities.Select(EntityToModel.ToModel).ToList();
             
             return Result.Success(models);
         }

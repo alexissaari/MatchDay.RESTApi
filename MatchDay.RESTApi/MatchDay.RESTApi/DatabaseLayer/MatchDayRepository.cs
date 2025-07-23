@@ -45,7 +45,7 @@ namespace MatchDay.RESTApi.DatabaseLayer
             await using (var db = new SQLiteContext())
             {
                 await db.Teams.AddAsync(team);
-                await db.SaveChangesAsync();
+                await db.SaveChangesAsync(); // on success, updates team.Id with Id used in SQLite table
 
                 return team.Id;
             }
