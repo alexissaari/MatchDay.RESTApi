@@ -1,7 +1,7 @@
 ﻿using System.Net.Http.Json;
 using MatchDay.RESTApi.WebLayer.DTOs;
 
-namespace AcceptanceTests.WebLayerShould
+namespace MatchDay.RESTApi.AcceptanceTests.WebLayerShould
 {
     public class MatchDayControllerShould
     {

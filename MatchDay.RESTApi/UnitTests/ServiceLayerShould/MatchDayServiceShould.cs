@@ -7,7 +7,7 @@ using MatchDay.RESTApi.ServiceLayer.Models;
 using MatchDay.RESTApi.ServiceLayer.Results;
 using Moq;
 
-namespace UnitTests.ServiceLayer
+namespace MatchDay.RESTApi.UnitTests.ServiceLayer
 {
     public class MatchDayServiceShould
     {
