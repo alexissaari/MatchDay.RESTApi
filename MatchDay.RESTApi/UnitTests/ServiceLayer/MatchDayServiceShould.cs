@@ -184,14 +184,14 @@ namespace UnitTests.ServiceLayer
             Assert.Equal("Error occured when creating new team.", error.Message);
         }
 
-        private IList<TeamEntity> GenerateListOfRandomTeamEntities(int numberOfTeams)
+        private IList<TeamEntity> GenerateListOfRandomTeamEntities(int count)
         {
             var teams = new List<TeamEntity>();
 
-            while (numberOfTeams > 0)
+            while (count > 0)
             {
                 teams.Add(GenerateRandomTeamEntity());
-                numberOfTeams--;
+                count--;
             }
 
             return teams;

@@ -16,17 +16,18 @@ namespace MatchDay.RESTApi.WebLayer.Mappers
                 title: GetTitle(result.ErrorResult.Type),
                 extensions: new Dictionary<string, object?>
                 {
-                    { "errors", new[] { result.ErrorResult } }
+                    { "errors", result.ErrorResult }
                 });
         }
 
-        public static IResult ValidationResultToProblem(FluentValidation.Results.ValidationResult validationResults)
+        public static IResult ValidationResultToHttpValidationProblemDetails(FluentValidation.Results.ValidationResult validationResults)
         {
-            return Results.Problem(new HttpValidationProblemDetails(validationResults.ToDictionary())
+            return Results.Problem(new HttpValidationProblemDetails()
             {
                 Status = StatusCodes.Status400BadRequest,
                 Title = "Bad Request",
-                Detail = "One or more validation errors occured."
+                Detail = "One or more validation errors occured.",
+                Errors = validationResults.ToDictionary()
             });
         }
 
