@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Moq;
 using HttpResults = Microsoft.AspNetCore.Http.HttpResults;
 
-namespace UnitTests.WebLayer
+namespace MatchDay.RESTApi.UnitTests.WebLayer
 {
     public class MatchDayControllerShould
     {
