@@ -1,5 +1,4 @@
-﻿using FluentValidation;
-using MatchDay.RESTApi.ServiceLayer.Interfaces;
+﻿using MatchDay.RESTApi.ServiceLayer.Interfaces;
 using MatchDay.RESTApi.ServiceLayer.Models;
 using MatchDay.RESTApi.WebLayer.DTOs;
 using MatchDay.RESTApi.WebLayer.Mappers;
@@ -8,6 +7,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MatchDay.RESTApi.WebLayer
 {
+    /*
+     * The Web Layer is the gateway into our service via our HTTP endpoints.
+     * 
+     * Let's use DTOs to provide the end user only the data they actually need.
+     * 
+     * For example, let's say our end user is a website displaying a team's roster:
+     * That website will display full names, so let's return full names instead of firstName and lastName.
+     * The website also does not need player Ids, so let's omit them.
+     */
+
     [ApiController]
     [Route("[controller]")]
     public class MatchDayController : ControllerBase

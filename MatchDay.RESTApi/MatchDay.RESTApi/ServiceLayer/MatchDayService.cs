@@ -6,6 +6,23 @@ using MatchDay.RESTApi.ServiceLayer.Results;
 
 namespace MatchDay.RESTApi.ServiceLayer
 {
+    /*
+     * The Service Layer is where we do all our business logic.
+     * 
+     * You'll notice each of these functions return a Result object. But WHY?
+     * 
+     * There's two trains of thought;
+     * if our database layer returns something not in-line with a happy path result,
+     * we can either throw an exception or we can return a failure result.
+     * 
+     * Throwing exceptions can be incredibly usefull when you really want to look into
+     * the inner exception to see what went wrong.
+     * 
+     * However, exceptions are cumbersome for common issues that don't need further investigation.
+     * 
+     * So, I've chosen to return failure result objects for common issues, 
+     * such as NotFound or AlreadyExists
+     */
     public class MatchDayService : IMatchDayService
     {
         IMatchDayRepository repository;

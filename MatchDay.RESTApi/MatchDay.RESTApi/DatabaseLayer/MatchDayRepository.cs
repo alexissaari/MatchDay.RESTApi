@@ -5,6 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MatchDay.RESTApi.DatabaseLayer
 {
+    /*
+     * The Database Layer is the connection to the database.
+     * 
+     * Here, we use Entities which are the C# object versions of our SQLite tables.
+     */
     public class MatchDayRepository : IMatchDayRepository
     {
         public async Task<IList<TeamEntity>> GetTeams()
