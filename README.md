@@ -1,5 +1,5 @@
 # MatchDay.RESTApi
-This `ASP.NET Core Web Api` is a `Minimum Viable Product` designed to show my ability to create a RESTApi. This project also includes fundimentals in Object-Oriented Design, Domain-Driven Design, and a dash of SQL Database Design.
+This ASP.NET Core Web Api is a Minimum Viable Product designed to show my ability to create a RESTApi. This project also includes fundimentals in Object-Oriented Design, Domain-Driven Design, and a dash of SQL Database Design.
 
 ### Running Locally
 - [Visual Studio 2022](https://visualstudio.microsoft.com/downloads/), built on Windows 11
