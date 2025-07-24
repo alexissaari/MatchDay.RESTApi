@@ -48,7 +48,7 @@ namespace MatchDay.RESTApi.WebLayer
             var validationResults = validator.Validate(teamId);
             if (!validationResults.IsValid)
             {
-                return ProblemExtensions.ValidationResultToProblem(validationResults);
+                return ProblemExtensions.ValidationResultToHttpValidationProblemDetails(validationResults);
             }
 
             var result = await this.service.GetTeam(teamId);
@@ -68,13 +68,18 @@ namespace MatchDay.RESTApi.WebLayer
 
         [HttpPost]
         [Route("Teams")]
-        public async Task<IResult> PostTeam(CreateTeamDto request, IValidator<CreateTeamDto> validator)
+        public async Task<IResult> PostTeam(CreateTeamDto request, CreateTeamDtoValidator validator)
         {
+            if (request == null)
+            {
+                return Results.BadRequest("Request body cannot be null.");
+            }
+
             var validationResults = validator.Validate(request);
 
             if (!validationResults.IsValid)
             {
-                return ProblemExtensions.ValidationResultToProblem(validationResults);
+                return ProblemExtensions.ValidationResultToHttpValidationProblemDetails(validationResults);
             }
 
             var model = new TeamModel
@@ -91,7 +96,7 @@ namespace MatchDay.RESTApi.WebLayer
                     LastName = p.LastName,
                 }).ToList(),
             };
-            
+
             var result = await this.service.CreateTeam(model);
             if (!result.IsSuccess)
             {

@@ -7,26 +7,6 @@ namespace MatchDay.RESTApi.DatabaseLayer
 {
     public class MatchDayRepository : IMatchDayRepository
     {
-        public async Task<PlayerEntity?> GetPlayer(int id)
-        {
-            await using (var db = new SQLiteContext())
-            {
-                return await db.Players
-                    .Include(x => x.Team)
-                    .FirstOrDefaultAsync(x => x.Id == id);
-            }
-        }
-
-        public async Task<CoachEntity?> GetCoach(int id)
-        {
-            await using (var db = new SQLiteContext())
-            {
-                return await db.Coaches
-                    .Include(x => x.Team)
-                    .FirstOrDefaultAsync(x => x.Id == id);
-            }
-        }
-
         public async Task<IList<TeamEntity>> GetTeams()
         {
             await using (var db = new SQLiteContext())
@@ -60,30 +40,12 @@ namespace MatchDay.RESTApi.DatabaseLayer
             }
         }
 
-        public async Task AddPlayer(PlayerEntity player)
-        {
-            await using (var db = new SQLiteContext())
-            {
-                await db.Players.AddAsync(player);
-                await db.SaveChangesAsync();
-            }
-        }
-
-        public async Task AddCoach(CoachEntity coach)
-        {
-            await using (var db = new SQLiteContext())
-            {
-                await db.Coaches.AddAsync(coach);
-                await db.SaveChangesAsync();
-            }
-        }
-
         public async Task<int?> AddTeam(TeamEntity team)
         {
             await using (var db = new SQLiteContext())
             {
                 await db.Teams.AddAsync(team);
-                await db.SaveChangesAsync();
+                await db.SaveChangesAsync(); // on success, updates team.Id with Id used in SQLite table
 
                 return team.Id;
             }
