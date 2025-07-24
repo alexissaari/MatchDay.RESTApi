@@ -7,6 +7,18 @@ This ASP.NET Core Web Api is a Minimum Viable Product designed to show my abilit
 - [DB Browser for SQLite](https://sqlitebrowser.org/) for viewing the SQLite database
 - [Postman](https://www.postman.com/) and built in Swagger for calling the HTTP endpoints
 
+#### TODOs
+- Add other CRUD routes
+  - PATCH
+  - PUT
+  - DELETE
+- Hook this up to an actual SQL Server DB
+  - Use SSMS
+  - CRUD updates through simple Stored Procedures
+  - Add more tables to show complexity -> Referees, Matches (w/ two teams, a referee, a date, and a score)
+- Continue to improve documentation, maybe a diagram of the layers?
+- Try to break the Failure Results the service layer is returning. Think: what else could go wrong?
+
 ### Endpoints
 > ```http 
 > GET /MatchDay/Teams
