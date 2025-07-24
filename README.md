@@ -11,15 +11,18 @@ Use Case: You are a sports coordinator and need a way to keep track of teams, th
 
 #### TODOs
 - Add other CRUD routes
-  - PATCH
+  - PATCH 
   - PUT
   - DELETE
+  - For teams, but also players/coaches?
+  - Ex: PATCH /Teams/{teamId}/Coach/{firstName}/{lastName} update this team's coach (what happens to previous coach? do we allow orphans?)
 - Hook this up to an actual SQL Server DB
   - Use SSMS
   - CRUD updates through simple Stored Procedures
-  - Add more tables to show complexity -> Referees, Matches (w/ two teams, a referee, a date, and a score)
+  - Add more tables to show my understanding of database design? -> Referees, Matches (w/ two teams, a referee, a date, and a score)
 - Continue to improve documentation, maybe a diagram of the layers?
 - Try to break the Failure Results the service layer is returning. Think: what else could go wrong?
+  - Player / Coach already exists? how would we validate this? it's not uncommon for two people to have the same first and last name
 
 ### Endpoints
 > ```http 
