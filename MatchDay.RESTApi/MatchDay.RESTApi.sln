@@ -5,9 +5,9 @@ VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchDay.RESTApi", "MatchDay.RESTApi\MatchDay.RESTApi.csproj", "{AA093DBB-1D66-4E61-A4D1-D831939343A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{0C648381-B9CB-4535-A810-87255930E119}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchDay.RESTApi.UnitTests", "UnitTests\MatchDay.RESTApi.UnitTests.csproj", "{0C648381-B9CB-4535-A810-87255930E119}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcceptanceTests", "AcceptanceTests\AcceptanceTests.csproj", "{AA7532AF-B6B2-455B-AD8F-FC95A802F385}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MatchDay.RESTApi.AcceptanceTests", "AcceptanceTests\MatchDay.RESTApi.AcceptanceTests.csproj", "{AA7532AF-B6B2-455B-AD8F-FC95A802F385}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
