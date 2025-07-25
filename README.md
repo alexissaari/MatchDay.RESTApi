@@ -1,7 +1,14 @@
 # MatchDay.RESTApi
-This ASP.NET Core Web Api is a Minimum Viable Product designed to show my ability to create a RESTful Api. This project also includes fundimentals in Object-Oriented Design, Domain-Driven Design, and a dash of SQL Database Design.
+This is a basic REST Api using ASP.NET Core v8, FluentValidation, EntityFrameworkCore, and SQLite. 
 
-**Use Case:** You are a sports coordinator and need a way to keep track of teams, their players, and their coach.
+Includes:
+- Swagger UI
+- Controllers
+- Services
+- Repositories
+- SQLite Datastore
+- Unit Tests
+- Acceptance Tests
 
 ### Running Locally
 - [Visual Studio 2022](https://visualstudio.microsoft.com/downloads/), built on Windows 11
