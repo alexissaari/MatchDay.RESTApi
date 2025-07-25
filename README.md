@@ -57,6 +57,8 @@ Includes:
 
 
 #### SQLite Database
+One-to-One -> Coach to Team relationship </br>
+Many-to-One -> Player to Team relationship
 <img width="726" height="497" alt="matchday_db_diagram" src="https://github.com/user-attachments/assets/a140a0d2-2ffe-4429-966e-517de1ed0d4a" />
 
 _Diagram created via [dbdiagram.io](https://dbdiagram.io/d)_
