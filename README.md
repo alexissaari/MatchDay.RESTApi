@@ -1,5 +1,5 @@
 # MatchDay.RESTApi
-This ASP.NET Core Web Api is a Minimum Viable Product designed to show my ability to create a RESTApi. This project also includes fundimentals in Object-Oriented Design, Domain-Driven Design, and a dash of SQL Database Design.
+This ASP.NET Core Web Api is a Minimum Viable Product designed to show my ability to create a RESTful Api. This project also includes fundimentals in Object-Oriented Design, Domain-Driven Design, and a dash of SQL Database Design.
 
 **Use Case:** You are a sports coordinator and need a way to keep track of teams, their players, and their coach.
 
