@@ -3,6 +3,7 @@ This is a basic REST Api using ASP.NET Core v8, FluentValidation, EntityFramewor
 
 Includes:
 - Swagger UI
+- Validators
 - Controllers
 - Services
 - Repositories
