@@ -4,12 +4,15 @@ This is a basic REST Api using ASP.NET Core v8, FluentValidation, EntityFramewor
 Includes:
 - Web Layer
   - Swagger UI
+  - DTOs
   - Validators
   - Controllers
 - Service Layer
+  - Models
   - Services
   - Simple Error Handing
 - Data Layer
+  - Entities 
   - Repositories
   - SQLite Datastore
 - Unit Tests
