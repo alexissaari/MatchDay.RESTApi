@@ -2,12 +2,16 @@
 This is a basic REST Api using ASP.NET Core v8, FluentValidation, EntityFrameworkCore, and SQLite. 
 
 Includes:
-- Swagger UI
-- Validators
-- Controllers
-- Services
-- Repositories
-- SQLite Datastore
+- Web Layer
+  - Swagger UI
+  - Validators
+  - Controllers
+- Service Layer
+  - Services
+  - Simple Error Handing
+- Data Layer
+  - Repositories
+  - SQLite Datastore
 - Unit Tests
 - Acceptance Tests
 
